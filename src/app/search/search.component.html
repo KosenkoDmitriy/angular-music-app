@@ -7,7 +7,7 @@
   <button (click)="submit(newquery.value)">Search</button>
 </p>
 
-<div *ngIf="results">
+<div *ngIf="results != undefined">
   <div *ngIf="!results.length">
     No tracks were found with the term '{{ query }}
   </div>
