@@ -15,10 +15,10 @@ import { SpotifyService } from './spotify.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full'},
-  { path: '/search', component: SearchComponent },
-  { path: '/albums', component: AlbumComponent },
-  { path: '/artists', component: ArtistComponent },
-  { path: '/tracks', component: TrackComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'albums', component: AlbumComponent },
+  { path: 'artists', component: ArtistComponent },
+  { path: 'tracks', component: TrackComponent }
 ];
 
 @NgModule({
