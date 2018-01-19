@@ -1,15 +1,17 @@
 import {
   Http,
   Response,
-  //RequestOptions,
+  RequestOptions,
 } from '@angular/http';
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
+
 @Injectable()
 export class SpotifyService {
+  static API_BASE_URL = 'https://api.spotify.com/v1';
   token: Object;
   secret: string;
 
@@ -59,7 +61,47 @@ export class SpotifyService {
       });
   }
 
-  searchTrack(query: string) {
+  query(Url: string, params?: Array<string>): Observable<any[]> {
+    let queryUrl = `${SpotifyService.API_BASE_URL}${Url}`;
+    if (params) {
+      queryUrl = `${queryUrl}?${params.join('&')}`;
+
+      const apiKeyWithdd = 'YTRkY2E5YWRiN2U2NDFhN2I2NmMxYjA4MDBkZTY2MzY6MjhlNTc2YTc0ZWIwNGY2YTlkNzQ4ZDU1MzYwZDU1Mjk=';// environment.spotifyApiKey;
+      // get accessToken
+      // curl -X "POST" -H "Authorization: Basic YTRkY2E5YWRiN2U2NDFhN2I2NmMxYjA4MDBkZTY2MzY6MjhlNTc2YTc0ZWIwNGY2YTlkNzQ4ZDU1MzYwZDU1Mjk=" -d grant_type=client_credentials https://accounts.spotify.com/api/token
+      const accessToken = 'BQAx4M33d8Wm9lOS2kWDQYnFtM0fs_7ZUkHxXgRQvRXnrypvzAHqaudAT8ccR3aeh1Nzf0qGXoWnMqzDmOU';
+      /*const headers = new Headers({
+        //'Authorization': `Bearer ${apiKeyWithdd}`
+        'Authorization': `Bearer ${accessToken}`
+        //'Authorization': `Basic ${apiKeyWithdd}`
+      });
+      const options = new RequestOptions({ headers: headers });
+      return this.http.request(queryUrl, options).map((res: any) => {
+        res.json();
+      });*/
+
+      //TODO: use env variable instead of access_token
+      queryUrl += `&access_token=${accessToken}`;
+      return this.http.request(queryUrl).map((res: any) => res.json() );
+    }
+  }
+
+  search(query: string, type: string): Observable<any[]> {
+    return this.query(`/search`, [
+      `q=${query}`,
+      `type=${type}`,
+    ]);
+  }
+
+  searchTrack(query: string): Observable<any[]> {
+    return this.search(query, 'track');
+  }
+
+  getTrack(id: string): Observable<any[]> {
+    return this.query(`/tracks/${id}`);
+  }
+
+  searchTrackOld(query: string) {
     // this.makePostAuth();
 
     console.log("searchTrack: ", query);
