@@ -11,6 +11,15 @@ import { AlbumComponent } from './album/album.component';
 import { TrackComponent } from './track/track.component';
 import { SearchComponent } from './search/search.component';
 
+import { SpotifyService } from './spotify.service';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'search', pathMatch: 'full'},
+  { path: '/search', component: SearchComponent },
+  { path: '/albums', component: AlbumComponent },
+  { path: '/artists', component: ArtistComponent },
+  { path: '/tracks', component: TrackComponent }
+];
 
 @NgModule({
   declarations: [
@@ -18,12 +27,17 @@ import { SearchComponent } from './search/search.component';
     ArtistComponent,
     AlbumComponent,
     TrackComponent,
-    SearchComponent
+    SearchComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [
+    { provide: SpotifyService, useClass: SpotifyService }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
