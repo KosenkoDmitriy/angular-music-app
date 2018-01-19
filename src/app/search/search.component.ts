@@ -20,6 +20,24 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.search();
   }
 
+  search(): void {
+    console.log('this.query', this.query);
+    if (!this.query) return;
+    this.spotify.searchTrack(this.query).subscribe((res: any) => this.renderResults(res));
+  }
+
+  renderResults(res: any): void {
+    this.results = null;
+    if (res && res.tracks && res.tracks.items) {
+      this.results = res.tracks.items;
+    }
+  }
+
+  submit(query: string): void {
+    this.router.navigate(['search'], { queryParams: { query: query } }).then(_ => this.search());
+    //console.log(query);
+  }
 }
