@@ -36,7 +36,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   ],
   providers: [
-    { provide: SpotifyService, useClass: SpotifyService }
+    { provide: SpotifyService, useClass: SpotifyService },
+    {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
