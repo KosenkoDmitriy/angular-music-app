@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
 /*
  * Services
  */
-import { SpotifyService } from '../spotify.service';
+import {SpotifyService} from '../spotify.service';
 
 @Component({
   selector: 'app-track',
@@ -19,14 +19,16 @@ import { SpotifyService } from '../spotify.service';
 export class TrackComponent implements OnInit {
   id: string;
   track: Object;
-  //private spotify: SpotifyService;
 
-  constructor(private route: ActivatedRoute, private spotify: SpotifyService, private location: Location) {
+  constructor(private route: ActivatedRoute, private spotify: SpotifyService,
+              private location: Location) {
     route.params.subscribe(params => { this.id = params['id']; });
   }
 
   ngOnInit(): void {
-    this.spotify.getTrack(this.id).subscribe((res: any) => this.renderTrack(res));
+    this.spotify
+      .getTrack(this.id)
+      .subscribe((res: any) => this.renderTrack(res));
   }
 
   back(): void {
@@ -35,29 +37,5 @@ export class TrackComponent implements OnInit {
 
   renderTrack(res: any): void {
     this.track = res;
-    //console.log("track: ", this.track);
   }
 }
-
-
-
-//import { Component, OnInit } from '@angular/core';
-//import { SpotifyService } from '../spotify.service';
-//
-//@Component({
-//  selector: 'app-track',
-//  templateUrl: './track.component.html',
-//  styleUrls: ['./track.component.css']
-//})
-//export class TrackComponent implements OnInit {
-//  spotify: SpotifyService;
-//
-//  constructor() { }
-//
-//  ngOnInit() {
-//    this.spotify.getTrack(this.id).subscribe((res: any) => {
-//      this.renderTrack(res);
-//    });
-//  }
-//
-//}
