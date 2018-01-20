@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(): void {
-    console.log('this.query', this.query);
+    //console.log('this.query', this.query);
     if (!this.query) return;
     this.spotify.searchTrack(this.query).subscribe((res: any) => this.renderResults(res));
   }
